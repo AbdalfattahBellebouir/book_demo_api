@@ -1,0 +1,1 @@
+docker run -d --name book_api_container -p 8000:8000 book_api

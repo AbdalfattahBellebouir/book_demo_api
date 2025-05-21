@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+sqlalchemy
+structlog
+ddtrace
