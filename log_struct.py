@@ -1,14 +1,14 @@
 import logging
 import structlog
-# from ddtrace import tracer
+from ddtrace import tracer
 import sys
 
-# def inject_trace_ids(logger, method_name, event_dict):
-#     span = tracer.current_span()
-#     if span:
-#         event_dict["dd.trace_id"] = span.trace_id
-#         event_dict["dd.span_id"] = span.span_id
-#     return event_dict
+def inject_trace_ids(logger, method_name, event_dict):
+    span = tracer.current_span()
+    if span:
+        event_dict["trace_id"] = str(span.trace_id)
+        event_dict["span_id"] = str(span.span_id)
+    return event_dict
 
 def setup_structlog():
     logging.basicConfig(
@@ -20,7 +20,7 @@ def setup_structlog():
     structlog.configure(
         processors=[
         structlog.processors.TimeStamper(fmt="iso"),
-        # inject_trace_ids,
+        inject_trace_ids,
         structlog.processors.add_log_level,
         structlog.processors.JSONRenderer()
         ],
